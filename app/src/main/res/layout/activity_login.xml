@@ -61,7 +61,8 @@
                 android:layout_gravity="center"
                 android:background="@color/white"
                 android:padding="8dp"
-                android:text="@string/or" />
+                android:text="@string/or"
+                android:textColor="#757575" />
         </FrameLayout>
     </LinearLayout>
 
