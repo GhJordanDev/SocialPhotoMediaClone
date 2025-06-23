@@ -1,6 +1,8 @@
 package com.example.instaclone2.login.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -23,10 +25,18 @@ class LoginActivity : AppCompatActivity() {
         editTextEmail.addTextChangedListener(watcher)
         editTextPassword.addTextChangedListener(watcher)
 
-        findViewById<Button>(R.id.login_btn_enter).setOnClickListener {
+        val buttonEnter = findViewById<LoadingButton>(R.id.login_btn_enter)
+
+        buttonEnter.setOnClickListener {
+            buttonEnter.showProgress(true)
+
             findViewById<TextInputLayout>(R.id.login_edit_email_input).error = "E-mail inválido"
 
             findViewById<TextInputLayout>(R.id.login_edit_password_input).error = "Senha incorrta"
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                buttonEnter.showProgress(false)
+            },2000)
         }
     }
 
@@ -36,12 +46,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            findViewById<Button>(R.id.login_btn_enter).isEnabled = p0.toString().isNotEmpty()
+            findViewById<LoadingButton>(R.id.login_btn_enter).isEnabled = p0.toString().isNotEmpty()
         }
 
         override fun afterTextChanged(p0: Editable?) {
             TODO("Not yet implemented")
         }
-
     }
 }
