@@ -52,6 +52,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/blue_enabled</item>
     </style>
+    
+    <style name="Theme.InstaClone2.Icon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
 
     <style name="Theme.InstaClone2.TextViewProfile">
         <item name="android:layout_width">0dp</item>
@@ -67,6 +73,5 @@
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="android:textAllCaps">false</item>
-
     </style>
 </resources>
