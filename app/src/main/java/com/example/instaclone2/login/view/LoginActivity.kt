@@ -11,11 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.instaclone2.R
+import com.example.instaclone2.common.util.TxtWatcher
 import com.example.instaclone2.databinding.ActivityLoginBinding
+import com.example.instaclone2.login.Login
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), Login.View {
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -29,29 +31,37 @@ class LoginActivity : AppCompatActivity() {
             loginEditPassword.addTextChangedListener(watcher)
 
             loginBtnEnter.setOnClickListener {
-                loginBtnEnter.showProgress(true)
+                //Chamar Presenter
 
-                loginEditEmailInput.error = "E-mail inválido"
-                loginEditPasswordInput.error = "Senha incorrta"
-
-                Handler(Looper.getMainLooper()).postDelayed({
+                /*Handler(Looper.getMainLooper()).postDelayed({
                     loginBtnEnter.showProgress(false)
-                }, 2000)
+                }, 2000)*/
             }
         }
     }
 
-    private val watcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            TODO("Not yet implemented")
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            binding.loginBtnEnter.isEnabled = p0.toString().isNotEmpty()
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-            TODO("Not yet implemented")
-        }
+    private val watcher = TxtWatcher {
+        binding.loginBtnEnter.isEnabled = it.isNotEmpty()
     }
+
+    override fun showProgress(enabled: Boolean) {
+        binding.loginBtnEnter.showProgress(true)
+    }
+
+    override fun displayEmailFailure(emailError: Int?) {
+        binding.loginEditEmailInput.error = emailError?.let{ getString(it) }
+    }
+
+    override fun displayPasswordFailure(passwordError: Int?) {
+        binding.loginEditPasswordInput.error = passwordError?.let{ getString(it) }
+    }
+
+    override fun onUserAuthenticated() {
+        //IR PARA TELA PRINCIPAL
+    }
+
+    override fun onUserUnauthorized() {
+        //MOSTRAR UM ALERTA
+    }
+
 }
