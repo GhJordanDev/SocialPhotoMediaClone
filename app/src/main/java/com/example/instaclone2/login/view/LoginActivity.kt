@@ -1,11 +1,13 @@
 package com.example.instaclone2.login.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,7 +16,10 @@ import com.example.instaclone2.R
 import com.example.instaclone2.common.util.TxtWatcher
 import com.example.instaclone2.databinding.ActivityLoginBinding
 import com.example.instaclone2.login.Login
+import com.example.instaclone2.login.data.FakeDataSource
+import com.example.instaclone2.login.data.LoginRepository
 import com.example.instaclone2.login.presentation.LoginPresenter
+import com.example.instaclone2.main.view.MainActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -29,7 +34,8 @@ class LoginActivity : AppCompatActivity(), Login.View {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = LoginPresenter(this)
+        val repository = LoginRepository(FakeDataSource())
+        presenter = LoginPresenter(this, repository)
 
         with(binding) {
             loginEditEmail.addTextChangedListener(watcher)
@@ -45,9 +51,7 @@ class LoginActivity : AppCompatActivity(), Login.View {
                 //Chamar Presenter
                 presenter.login(loginEditEmail.text.toString(), loginEditPassword.text.toString())
 
-                /*Handler(Looper.getMainLooper()).postDelayed({
-                    loginBtnEnter.showProgress(false)
-                }, 2000)*/
+
             }
         }
     }
@@ -75,11 +79,13 @@ class LoginActivity : AppCompatActivity(), Login.View {
     }
 
     override fun onUserAuthenticated() {
-        //IR PARA TELA PRINCIPAL
+        val intent = Intent (this, MainActivity::class.java )
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
-    override fun onUserUnauthorized() {
-        //MOSTRAR UM ALERTA
+    override fun onUserUnauthorized(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }
