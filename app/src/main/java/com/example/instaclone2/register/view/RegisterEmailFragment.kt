@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.instaclone2.R
+import com.example.instaclone2.common.util.TxtWatcher
 import com.example.instaclone2.databinding.FragmentRegisterEmailBinding
 import com.example.instaclone2.register.RegisterEmail
 
@@ -20,16 +21,36 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
 
         binding = FragmentRegisterEmailBinding.bind(view)
 
+        binding?.let{
+            with(it){
+                registerTxtLogin.setOnClickListener{
+                    activity?.finish()
+                }
 
-    }
+                registerBtnNext.setOnClickListener{
+                    presenter.create(registerEditEmail.text.toString())
+                }
 
-    override fun displayEmailFailure(emailError: Int?) {
-        TODO("Not yet implemented")
+                registerEditEmail.addTextChangedListener(watcher)
+                registerEditEmail.addTextChangedListener(TxtWatcher{
+                    displayEmailFailure(null)
+                })
+
+            }
+        }
     }
 
     override fun onDestroy() {
         binding = null
-        presenter.onDestroy()
+       // presenter.onDestroy()
         super.onDestroy()
+    }
+
+    private val watcher = TxtWatcher {
+        binding?.registerBtnNext?.isEnabled = binding?.registerEditEmail?.text.toString().isNotEmpty()
+    }
+
+    override fun displayEmailFailure(emailError: Int?) {
+        TODO("Not yet implemented")
     }
 }

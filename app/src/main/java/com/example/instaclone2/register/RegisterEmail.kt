@@ -8,7 +8,7 @@ import java.lang.Error
 interface RegisterEmail {
 
     interface Presenter : BasePresenter{
-
+        fun create(email: String)
     }
 
     interface View: BaseView<Presenter>{
