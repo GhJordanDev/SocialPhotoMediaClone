@@ -21,6 +21,7 @@ import com.example.instaclone2.login.data.FakeDataSource
 import com.example.instaclone2.login.data.LoginRepository
 import com.example.instaclone2.login.presentation.LoginPresenter
 import com.example.instaclone2.main.view.MainActivity
+import com.example.instaclone2.register.view.RegisterActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -50,8 +51,10 @@ class LoginActivity : AppCompatActivity(), Login.View {
             loginBtnEnter.setOnClickListener {
                 //Chamar Presenter
                 presenter.login(loginEditEmail.text.toString(), loginEditPassword.text.toString())
+            }
 
-
+            loginTxtRegister.setOnClickListener{
+                goToRegisterScreen()
             }
         }
     }
@@ -64,6 +67,10 @@ class LoginActivity : AppCompatActivity(), Login.View {
     private val watcher = TxtWatcher {
         binding.loginBtnEnter.isEnabled = binding.loginEditEmail.text.toString().isNotEmpty()
                 && binding.loginEditPassword.text.toString().isNotEmpty()
+    }
+
+    private fun goToRegisterScreen(){
+        startActivity(Intent(this, RegisterActivity::class.java))
     }
 
     override fun showProgress(enabled: Boolean) {
