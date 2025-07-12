@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.instaclone2.R
+import com.example.instaclone2.common.base.DependencyInjector
 import com.example.instaclone2.common.util.TxtWatcher
 import com.example.instaclone2.databinding.FragmentRegisterEmailBinding
 import com.example.instaclone2.register.RegisterEmail
+import com.example.instaclone2.register.presentation.RegisterEmailPresenter
 
 class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), RegisterEmail.View {
 
@@ -21,18 +23,21 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
 
         binding = FragmentRegisterEmailBinding.bind(view)
 
-        binding?.let{
-            with(it){
-                registerTxtLogin.setOnClickListener{
+        val repository = DependencyInjector.registerEmailRepository()
+        presenter = RegisterEmailPresenter(this, repository)
+
+        binding?.let {
+            with(it) {
+                registerTxtLogin.setOnClickListener {
                     activity?.finish()
                 }
 
-                registerBtnNext.setOnClickListener{
+                registerBtnNext.setOnClickListener {
                     presenter.create(registerEditEmail.text.toString())
                 }
 
                 registerEditEmail.addTextChangedListener(watcher)
-                registerEditEmail.addTextChangedListener(TxtWatcher{
+                registerEditEmail.addTextChangedListener(TxtWatcher {
                     displayEmailFailure(null)
                 })
 
@@ -42,15 +47,30 @@ class RegisterEmailFragment : Fragment(R.layout.fragment_register_email), Regist
 
     override fun onDestroy() {
         binding = null
-       // presenter.onDestroy()
+        // presenter.onDestroy()
         super.onDestroy()
     }
 
     private val watcher = TxtWatcher {
-        binding?.registerBtnNext?.isEnabled = binding?.registerEditEmail?.text.toString().isNotEmpty()
+        binding?.registerBtnNext?.isEnabled =
+            binding?.registerEditEmail?.text.toString().isNotEmpty()
+    }
+
+    override fun showProgress(enabled: Boolean) {
+        binding?.registerBtnNext?.showProgress(enabled)
     }
 
     override fun displayEmailFailure(emailError: Int?) {
+        binding?.registerEditEmailInput?.error = emailError?.let { getString(it) }
+    }
+
+    override fun onEmailFailure(message: String) {
+        binding?.registerEditEmailInput?.error = message
+    }
+
+    override fun goToNameAndPasswordScreen(email: String) {
         TODO("Not yet implemented")
     }
 }
+
+
