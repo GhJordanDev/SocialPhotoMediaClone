@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.instaclone2.R
 import com.example.instaclone2.databinding.ActivityRegisterBinding
 import com.example.instaclone2.register.view.RegisterNamePasswordFragment.Companion.KEY_EMAIL
+import com.example.instaclone2.register.view.RegisterWelcomeFragment.Companion.KEY_NAME
 
 class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
 
@@ -26,16 +27,25 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
     }
 
     override fun goToNameAndPasswordScreen(email: String) {
-        /*val args = Bundle()
-        val fragment = RegisterNamePasswordFragment()
-        fragment.arguments = args*/
-
         val fragment = RegisterNamePasswordFragment().apply{
             arguments = Bundle().apply {
                 putString(KEY_EMAIL,email)
             }
         }
+        replaceFragment(fragment)
+    }
 
+    override fun goToWelcomeScreen(name: String) {
+        val fragment = RegisterWelcomeFragment().apply{
+            arguments = Bundle().apply {
+                putString(KEY_NAME,name)
+            }
+        }
+        replaceFragment(fragment)
+    }
+
+    override fun goToPhotoScreen() {
+        val fragment = RegisterPhotoFragment()
         replaceFragment(fragment)
     }
 

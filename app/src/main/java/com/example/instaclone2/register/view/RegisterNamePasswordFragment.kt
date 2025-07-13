@@ -21,6 +21,7 @@ class RegisterNamePasswordFragment : Fragment(R.layout.fragment_register_name_pa
     RegisterNameAndPassword.View{
 
     private var binding: FragmentRegisterNamePasswordBinding? = null
+    private var fragmentAttachListener : FragmentAttachListener? = null
 
     override lateinit var presenter: RegisterNameAndPassword.Presenter
 
@@ -69,6 +70,13 @@ class RegisterNamePasswordFragment : Fragment(R.layout.fragment_register_name_pa
 
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is FragmentAttachListener){
+            fragmentAttachListener = context
+        }
+    }
+
     override fun showProgress(enabled: Boolean) {
         binding?.registerNameBtnNext?.showProgress(enabled)
     }
@@ -86,7 +94,7 @@ class RegisterNamePasswordFragment : Fragment(R.layout.fragment_register_name_pa
     }
 
     override fun onCreateSucess(name: String) {
-        //TODO: abrir tela de bem vindo
+        fragmentAttachListener?.goToWelcomeScreen(name)
     }
 
     private val watcher = TxtWatcher {
