@@ -1,5 +1,6 @@
 package com.example.instaclone2.register.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.instaclone2.R
 import com.example.instaclone2.databinding.ActivityRegisterBinding
+import com.example.instaclone2.main.view.MainActivity
 import com.example.instaclone2.register.view.RegisterNamePasswordFragment.Companion.KEY_EMAIL
 import com.example.instaclone2.register.view.RegisterWelcomeFragment.Companion.KEY_NAME
 
@@ -47,6 +49,12 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
     override fun goToPhotoScreen() {
         val fragment = RegisterPhotoFragment()
         replaceFragment(fragment)
+    }
+
+    override fun goToMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     private fun replaceFragment(fragment: Fragment) {
