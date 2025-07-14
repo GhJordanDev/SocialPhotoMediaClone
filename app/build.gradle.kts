@@ -46,7 +46,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation("com.github.CanHub:Android-Image-Cropper:2.0.0")
+
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

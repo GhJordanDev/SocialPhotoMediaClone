@@ -23,7 +23,8 @@
             android:paddingBottom="70dp"
             tools:context=".login.view.LoginActivity">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/register_img_profile"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginBottom="48dp"
@@ -45,7 +46,7 @@
                 style="@style/Theme.InstaClone2.TextViewBase.Form"/>
 
 
-            <com.example.instaclone2.login.view.LoadingButton
+            <com.example.instaclone2.common.view.LoadingButton
                 android:id="@+id/register_btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

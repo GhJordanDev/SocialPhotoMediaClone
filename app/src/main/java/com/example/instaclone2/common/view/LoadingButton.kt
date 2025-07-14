@@ -1,8 +1,7 @@
-package com.example.instaclone2.login.view
+package com.example.instaclone2.common.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
