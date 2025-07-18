@@ -58,7 +58,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.example.instaclone2.login.view.LoadingButton
+            <com.example.instaclone2.common.view.LoadingButton
                 android:id="@+id/login_btn_enter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
