@@ -1,5 +1,7 @@
 package com.example.instaclone2.common.extension
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -13,4 +15,12 @@ fun Activity.hideKeyboard() {
     }
 
     imm.hideSoftInputFromWindow(view?.windowToken, 0)
+}
+
+fun Activity.animatorEnd(callback: () -> Unit) : AnimatorListenerAdapter {
+    return object : AnimatorListenerAdapter(){
+        override fun onAnimationEnd(animation: Animator) {
+            callback.invoke()
+        }
+    }
 }
