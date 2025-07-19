@@ -14,5 +14,6 @@
         android:indeterminateTint="@color/white"
         android:layout_marginTop="16dp"
         android:visibility="gone"
+        android:indeterminateTintMode="src_in"
         tools:visibility="visible"/>
 </merge>

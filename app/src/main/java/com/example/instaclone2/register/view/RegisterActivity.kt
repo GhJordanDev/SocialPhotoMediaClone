@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.instaclone2.R
+import com.example.instaclone2.common.extension.hideKeyboard
 import com.example.instaclone2.common.view.CropperImageFragment
 import com.example.instaclone2.common.view.CropperImageFragment.Companion.KEY_URI
 import com.example.instaclone2.databinding.ActivityRegisterBinding
@@ -129,6 +130,7 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
                 commit()
             }
         }
+        hideKeyboard()
     }
 
     private fun openImageCropper(uri: Uri){
