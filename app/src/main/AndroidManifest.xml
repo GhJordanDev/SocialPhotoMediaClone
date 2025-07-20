@@ -28,7 +28,10 @@
         tools:targetApi="31">
         <activity
             android:name=".spash.view.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.RemoveSplashScreenTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,7 +5,7 @@ import com.example.instaclone2.spash.data.SplashCallback
 import com.example.instaclone2.spash.data.SplashRepository
 
 class SplashPresenter (
-    private var view: Splash.View?
+    private var view: Splash.View?,
     private var repository: SplashRepository
 ) : Splash.Presenter {
 

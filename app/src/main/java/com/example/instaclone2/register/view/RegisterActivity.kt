@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.instaclone2.R
 import com.example.instaclone2.common.extension.hideKeyboard
+import com.example.instaclone2.common.extension.replaceFragment
 import com.example.instaclone2.common.view.CropperImageFragment
 import com.example.instaclone2.common.view.CropperImageFragment.Companion.KEY_URI
 import com.example.instaclone2.databinding.ActivityRegisterBinding
@@ -118,18 +119,7 @@ class RegisterActivity : AppCompatActivity(), FragmentAttachListener {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        if (supportFragmentManager.findFragmentById(R.id.register_fragment) == null) {
-            supportFragmentManager.beginTransaction().apply {
-                add(R.id.register_fragment, fragment)
-                commit()
-            }
-        } else {
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.register_fragment, fragment)
-                addToBackStack(null)
-                commit()
-            }
-        }
+       replaceFragment(R.id.register_fragment, fragment)
         hideKeyboard()
     }
 
