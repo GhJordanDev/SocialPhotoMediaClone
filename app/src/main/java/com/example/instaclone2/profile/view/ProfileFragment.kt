@@ -13,9 +13,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instaclone2.R
 import com.example.instaclone2.common.base.BaseFragment
+import com.example.instaclone2.common.base.DependencyInjector
 import com.example.instaclone2.common.model.Post
 import com.example.instaclone2.common.model.UserAuth
 import com.example.instaclone2.databinding.FragmentProfileBinding
+import com.example.instaclone2.profile.Profile
+import com.example.instaclone2.profile.data.ProfileRepository
+import com.example.instaclone2.profile.presenter.ProfilePresenter
 import com.example.instaclone2.register.RegisterEmail
 
 class ProfileFragment
@@ -29,7 +33,8 @@ class ProfileFragment
     private val adapter = PostAdapter()
 
     override fun setupPresenter() {
-        // TODO:  presenter = ProfilePresenter(this, repository)
+        val repository = DependencyInjector.profileRepository()
+        presenter = ProfilePresenter(this, repository)
     }
 
     override fun setupViews() {

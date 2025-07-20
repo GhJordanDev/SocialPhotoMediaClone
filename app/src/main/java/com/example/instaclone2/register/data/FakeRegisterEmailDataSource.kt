@@ -43,7 +43,6 @@ class FakeRegisterEmailDataSource : RegisterDataSource {
                     callback.onFailure("Erro interno no servidor.")
                 }
             }
-
             callback.onComplete()
         }, 2000)
     }

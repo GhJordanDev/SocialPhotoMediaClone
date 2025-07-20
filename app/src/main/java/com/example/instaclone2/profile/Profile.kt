@@ -1,4 +1,4 @@
-package com.example.instaclone2.profile.view
+package com.example.instaclone2.profile
 
 import com.example.instaclone2.common.base.BasePresenter
 import com.example.instaclone2.common.base.BaseView
