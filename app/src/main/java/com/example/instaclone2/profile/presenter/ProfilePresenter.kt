@@ -17,11 +17,14 @@ class ProfilePresenter
      private val repository: ProfileRepository
 ) : Profile.Presenter {
 
+    override var state: UserAuth? = null
+
     override fun fetchUserProfile() {
         view?.showProgress(true)
         val userUUID = Database.sessionAuth?.uuid ?: throw RuntimeException("user not found")
         repository.fetchUserProfile(userUUID, object : RequestCallback<UserAuth> {
             override fun onSucess(data: UserAuth) {
+                state = data
                 view?.displayUserProfile(data)
             }
 

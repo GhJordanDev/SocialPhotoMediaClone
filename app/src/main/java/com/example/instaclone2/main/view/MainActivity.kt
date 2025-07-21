@@ -30,8 +30,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private lateinit var searchFragment: Fragment
     private lateinit var cameraFragment: Fragment
     private lateinit var profileFragment: Fragment
-
     private lateinit var currentFragment: Fragment
+
+    private lateinit var fragmentSavedState: HashMap<String, Fragment.SavedState?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,23 +53,28 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
-        homeFragment = HomeFragment()
+        if(savedInstanceState == null){
+            fragmentSavedState = HashMap()
+        }else{
+            savedInstanceState.getSerializable("fragmentState") as HashMap<String, Fragment.SavedState?>
+        }
+
+        /*homeFragment = HomeFragment()
         searchFragment = SearchFragment()
         cameraFragment = CameraFragment()
-        profileFragment = ProfileFragment()
+        profileFragment = ProfileFragment()*/
 
-        currentFragment = homeFragment
+        /*currentFragment = homeFragment
         supportFragmentManager.beginTransaction().apply {
             add(R.id.main_fragment, profileFragment, "3").hide(profileFragment)
             add(R.id.main_fragment, cameraFragment, "2").hide(cameraFragment)
             add(R.id.main_fragment, searchFragment, "1").hide(searchFragment)
             add(R.id.main_fragment, homeFragment, "0")
             commit()
-        }
-
+        }*/
 
         binding.mainBottomNav.setOnNavigationItemSelectedListener(this)
-        //binding.mainBottomNav.selectedItemId = R.id.menu_bottom_home
+        binding.mainBottomNav.selectedItemId = R.id.menu_bottom_home
     }
 
     private fun setScrollToolbarEnabled(enabled: Boolean) {
@@ -86,8 +92,46 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding.mainAppbar.layoutParams = coordinatorParams
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("fragmentState", fragmentSavedState)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var scrollToolbarEnabled = false
+
+        val newFrag: Fragment? = when (item.itemId) {
+            R.id.menu_bottom_home -> {
+                HomeFragment()
+            }
+            R.id.menu_bottom_profile -> {
+                ProfileFragment()
+            }
+            else -> null
+        }
+
+        val currFragment = supportFragmentManager.findFragmentById(R.id.main_fragment)
+
+        val fragmentTag = newFrag?.javaClass?.simpleName
+
+        if(!currFragment?.tag.equals(fragmentTag)){
+            currFragment?.let { frag ->
+                fragmentSavedState.put(
+                    frag.tag!!,
+                    supportFragmentManager.saveFragmentInstanceState(frag)
+                )
+            }
+        }
+
+        newFrag?.setInitialSavedState(fragmentSavedState[fragmentTag])
+        newFrag?.let{
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_fragment, it, fragmentTag)
+                .addToBackStack(fragmentTag)
+                .commit()
+        }
+
+        /*Version 1.0
         when (item.itemId) {
             R.id.menu_bottom_home -> {
                 if (currentFragment == homeFragment) return false
@@ -113,13 +157,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 currentFragment = profileFragment
                 scrollToolbarEnabled = true
             }
-        }
+        }*/
 
         setScrollToolbarEnabled(scrollToolbarEnabled)
 
-        /*currentFragment?.let{
+        currentFragment?.let{
             replaceFragment(R.id.main_fragment, it)
-        }*/
+        }
         return true
     }
 }

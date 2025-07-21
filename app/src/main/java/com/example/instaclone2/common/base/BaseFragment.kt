@@ -46,7 +46,12 @@ abstract class BaseFragment<T, P: BasePresenter>(
 
         binding = bind(view)
 
-        setupViews()
+        savedInstanceState?.getString("name")
+
+        if(savedInstanceState == null){
+            setupViews()
+        }
+
     }
 
     abstract fun setupViews()

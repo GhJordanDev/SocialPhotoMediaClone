@@ -45,6 +45,21 @@ class ProfileFragment
         presenter.fetchUserPosts()
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        if(savedInstanceState != null){
+            val state = savedInstanceState.getParcelable<UserAuth?>("myState")
+            state?.let{
+                displayUserProfile(it)
+            }
+        }
+        super.onViewStateRestored(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable("myState", presenter.state)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun showProgress(enabled: Boolean) {
         binding?.profileProgress?.visibility = if(enabled) View.VISIBLE else View.GONE
     }

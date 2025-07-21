@@ -8,6 +8,7 @@ import com.example.instaclone2.common.model.UserAuth
 interface Profile {
 
     interface Presenter : BasePresenter{
+        var state: UserAuth?
         fun fetchUserProfile()
         fun fetchUserPosts()
     }
