@@ -14,27 +14,31 @@ import com.example.instaclone2.R
 import com.example.instaclone2.common.base.BaseFragment
 import com.example.instaclone2.databinding.FragmentHomeBinding
 
-class HomeFragment : BaseFragment<FragmentHomeBinding, Home.Presenter>(
-    R.layout.fragment_home,
-    FragmentHomeBinding::bind
-) {
+class HomeFragment : Fragment() {
 
-    override lateinit var presenter: Home.Presenter
-
-    override fun setupViews() {
-        binding?.homeRv?.layoutManager = LinearLayoutManager(requireContext())
-        binding?.homeRv?.adapter = PostAdapter()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun setupPresenter() {
-        TODO("Not yet implemented")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val rv = view.findViewById<RecyclerView>(R.id.home_rv)
+        rv.layoutManager = LinearLayoutManager(requireContext())
+        rv.adapter = PostAdapter()
     }
 
-    override fun getMenu(): Int? {
-        return R.menu.menu_home
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
-    private class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>(){
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_profile, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
             return PostViewHolder(
@@ -42,18 +46,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, Home.Presenter>(
             )
         }
 
-        override fun getItemCount(): Int {
-            return 30
-        }
-
         override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
             holder.bind(R.drawable.ic_insta_add)
         }
 
-        private class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-            fun bind(image: Int){
+        override fun getItemCount(): Int {
+            return 30
+        }
+
+
+        private class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun bind(image: Int) {
                 itemView.findViewById<ImageView>(R.id.home_img_post).setImageResource(image)
             }
         }
+
+
     }
+
 }

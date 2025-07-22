@@ -20,7 +20,6 @@ import com.example.instaclone2.databinding.FragmentProfileBinding
 import com.example.instaclone2.profile.Profile
 import com.example.instaclone2.profile.data.ProfileRepository
 import com.example.instaclone2.profile.presenter.ProfilePresenter
-import com.example.instaclone2.profile.presenter.ProfileState
 import com.example.instaclone2.register.RegisterEmail
 
 class ProfileFragment
@@ -38,42 +37,11 @@ class ProfileFragment
         presenter = ProfilePresenter(this, repository)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.subscribe(
-            if(savedInstanceState != null){
-                ProfileState(
-                    (savedInstanceState.getParcelableArray("posts") as Array<Post>).toList(),
-                    (savedInstanceState.getParcelable("user"))
-                )
-            } else{
-                null
-            }
-        )
-    }
-
     override fun setupViews() {
         binding?.profileRv?.layoutManager = GridLayoutManager(requireContext(), 3)
         binding?.profileRv?.adapter = adapter
 
-        //presenter.fetchUserProfile()
-        //presenter.fetchUserPosts()
-    }
-
-    /*override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        if(savedInstanceState != null){
-            val state = savedInstanceState.getParcelable<UserAuth?>("myState")
-            state?.let{
-                displayUserProfile(it)
-            }
-        }
-        super.onViewStateRestored(savedInstanceState)
-    }*/
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable("user", presenter.getState().fetchUserProfile())
-        outState.putParcelableArray("posts", presenter.getState().fetchUserPosts()?.toTypedArray())
-        super.onSaveInstanceState(outState)
+        presenter.fetchUserProfile()
     }
 
     override fun showProgress(enabled: Boolean) {
@@ -87,7 +55,7 @@ class ProfileFragment
         binding?.profileTxtUsername?.text = userAuth.name
         binding?.profileTxtBio?.text = "TODO"
 
-        //presenter.fetchUserPosts()
+        presenter.fetchUserPosts()
     }
 
     override fun displayRequestFailure(message: String) {

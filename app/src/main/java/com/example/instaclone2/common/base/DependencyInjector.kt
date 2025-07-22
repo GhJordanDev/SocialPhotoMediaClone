@@ -2,7 +2,10 @@ package com.example.instaclone2.common.base
 
 import com.example.instaclone2.login.data.FakeDataSource
 import com.example.instaclone2.login.data.LoginRepository
+import com.example.instaclone2.profile.data.PostListMemoryCache
+import com.example.instaclone2.profile.data.ProfileDataSourceFactory
 import com.example.instaclone2.profile.data.ProfileFakeRemoteDataSource
+import com.example.instaclone2.profile.data.ProfileMemoryCache
 import com.example.instaclone2.profile.data.ProfileRepository
 import com.example.instaclone2.register.data.FakeRegisterEmailDataSource
 import com.example.instaclone2.register.data.RegisterRepository
@@ -24,6 +27,6 @@ object DependencyInjector {
     }
 
     fun profileRepository() : ProfileRepository{
-        return ProfileRepository(ProfileFakeRemoteDataSource())
+        return ProfileRepository(ProfileDataSourceFactory(ProfileMemoryCache, PostListMemoryCache))
     }
 }
