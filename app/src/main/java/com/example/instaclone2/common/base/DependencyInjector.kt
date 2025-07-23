@@ -1,5 +1,8 @@
 package com.example.instaclone2.common.base
 
+import com.example.instaclone2.home.data.FeedMemoryCache
+import com.example.instaclone2.home.data.HomeDataSourceFactory
+import com.example.instaclone2.home.data.HomeRepository
 import com.example.instaclone2.login.data.FakeDataSource
 import com.example.instaclone2.login.data.LoginRepository
 import com.example.instaclone2.profile.data.PostListMemoryCache
@@ -28,5 +31,9 @@ object DependencyInjector {
 
     fun profileRepository() : ProfileRepository{
         return ProfileRepository(ProfileDataSourceFactory(ProfileMemoryCache, PostListMemoryCache))
+    }
+
+    fun homeRepository() : HomeRepository {
+        return HomeRepository(HomeDataSourceFactory(FeedMemoryCache))
     }
 }
