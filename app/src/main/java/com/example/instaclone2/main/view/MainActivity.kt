@@ -4,16 +4,12 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.WindowInsetsController
-import androidx.appcompat.widget.Toolbar
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.instaclone2.R
-import com.example.instaclone2.camera.view.CameraFragment
+import com.example.instaclone2.add.view.AddFragment
 import com.example.instaclone2.common.extension.replaceFragment
 import com.example.instaclone2.databinding.ActivityMainBinding
 import com.example.instaclone2.home.view.HomeFragment
@@ -28,7 +24,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private lateinit var homeFragment: Fragment
     private lateinit var searchFragment: Fragment
-    private lateinit var cameraFragment: Fragment
+    private lateinit var addFragment: Fragment
     private lateinit var profileFragment: Fragment
     private  var currentFragment: Fragment? = null
 
@@ -53,7 +49,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         homeFragment = HomeFragment()
         searchFragment = SearchFragment()
-        cameraFragment = CameraFragment()
+        addFragment =  AddFragment()
         profileFragment = ProfileFragment()
 
         binding.mainBottomNav.setOnNavigationItemSelectedListener(this)
@@ -90,8 +86,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.menu_bottom_add -> {
-                if (currentFragment == cameraFragment) return false
-                currentFragment = cameraFragment
+                if (currentFragment == addFragment) return false
+                currentFragment = addFragment
             }
 
             R.id.menu_bottom_profile -> {
