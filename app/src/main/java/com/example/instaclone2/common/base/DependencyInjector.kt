@@ -1,5 +1,8 @@
 package com.example.instaclone2.common.base
 
+import com.example.instaclone2.add.data.AddFakeRemoteDataSource
+import com.example.instaclone2.add.data.AddLocalDataSource
+import com.example.instaclone2.add.data.AddRepository
 import com.example.instaclone2.home.data.FeedMemoryCache
 import com.example.instaclone2.home.data.HomeDataSourceFactory
 import com.example.instaclone2.home.data.HomeRepository
@@ -7,10 +10,9 @@ import com.example.instaclone2.login.data.FakeDataSource
 import com.example.instaclone2.login.data.LoginRepository
 import com.example.instaclone2.profile.data.PostListMemoryCache
 import com.example.instaclone2.profile.data.ProfileDataSourceFactory
-import com.example.instaclone2.profile.data.ProfileFakeRemoteDataSource
 import com.example.instaclone2.profile.data.ProfileMemoryCache
 import com.example.instaclone2.profile.data.ProfileRepository
-import com.example.instaclone2.register.data.FakeRegisterEmailDataSource
+import com.example.instaclone2.register.data.FakeRegisterDataSource
 import com.example.instaclone2.register.data.RegisterRepository
 import com.example.instaclone2.spash.data.FakeLocalDataSource
 import com.example.instaclone2.spash.data.SplashRepository
@@ -26,7 +28,7 @@ object DependencyInjector {
     }
 
     fun registerEmailRepository() : RegisterRepository{
-        return RegisterRepository (FakeRegisterEmailDataSource())
+        return RegisterRepository (FakeRegisterDataSource())
     }
 
     fun profileRepository() : ProfileRepository{
@@ -35,5 +37,9 @@ object DependencyInjector {
 
     fun homeRepository() : HomeRepository {
         return HomeRepository(HomeDataSourceFactory(FeedMemoryCache))
+    }
+
+    fun addRepository() : AddRepository {
+        return AddRepository(AddFakeRemoteDataSource(), AddLocalDataSource())
     }
 }

@@ -8,7 +8,7 @@ import com.example.instaclone2.common.model.Photo
 import com.example.instaclone2.common.model.UserAuth
 import java.util.UUID
 
-class FakeRegisterEmailDataSource : RegisterDataSource {
+class   FakeRegisterDataSource : RegisterDataSource {
 
     override fun create(email: String, callback: RegisterCallback) {
         Handler(Looper.getMainLooper()).postDelayed({
@@ -38,6 +38,11 @@ class FakeRegisterEmailDataSource : RegisterDataSource {
 
                 if(created){
                     Database.sessionAuth = newUser
+
+                   Database.followers[newUser.uuid] = hashSetOf()
+                   Database.posts[newUser.uuid] = hashSetOf()
+                   Database.feeds[newUser.uuid] = hashSetOf()
+
                     callback.onSucess()
                 } else {
                     callback.onFailure("Erro interno no servidor.")

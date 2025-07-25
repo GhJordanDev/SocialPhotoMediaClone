@@ -15,7 +15,9 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import com.example.instaclone2.R
 import com.example.instaclone2.common.util.Files
@@ -64,14 +66,15 @@ class CameraFragment : Fragment() {
             outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback{
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
-                    //TODO: delegar URI ao presenter
+
+                    setFragmentResult("takePhotoKey", bundleOf("uri" to savedUri))
                 }
 
                 override fun onError(exception: ImageCaptureException) {
                     Log.e("Teste", "Failure to take picture", exception)
                 }
             })
-        )
+
     }
 
     private fun startCamera(){
@@ -83,7 +86,7 @@ class CameraFragment : Fragment() {
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.surfaceProvider(previewView.surfaceProvider)
+                    it.surfaceProvider = previewView.surfaceProvider
                 }
 
             imageCapture = ImageCapture.Builder().build()
