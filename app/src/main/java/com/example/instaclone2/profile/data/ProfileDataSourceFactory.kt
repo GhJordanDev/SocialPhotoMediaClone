@@ -1,11 +1,12 @@
 package com.example.instaclone2.profile.data
 
+import com.example.instaclone2.common.base.Cache
 import com.example.instaclone2.common.model.Post
 import com.example.instaclone2.common.model.UserAuth
 
 class ProfileDataSourceFactory(
-    private val profileCache : ProfileCache<UserAuth>,
-    private val postsCache : ProfileCache <List<Post>>
+    private val profileCache : Cache<UserAuth>,
+    private val postsCache : Cache<List<Post>>
 ) {
 
     fun createLocalDataSource(): ProfileDataSource{

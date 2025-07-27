@@ -63,6 +63,7 @@ class AddActivity : AppCompatActivity(), Add.View {
     }
 
     override fun displayRequestSucess() {
+        setResult(RESULT_OK)
         finish()
     }
 

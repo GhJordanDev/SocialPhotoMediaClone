@@ -1,8 +1,9 @@
 package com.example.instaclone2.profile.data
 
+import com.example.instaclone2.common.base.Cache
 import com.example.instaclone2.common.model.UserAuth
 
-object ProfileMemoryCache : ProfileCache<UserAuth>{
+object ProfileMemoryCache : Cache<UserAuth> {
 
     private var userAuth: UserAuth? = null
 
@@ -17,7 +18,7 @@ object ProfileMemoryCache : ProfileCache<UserAuth>{
         return null
     }
 
-    override fun put(data: UserAuth) {
+    override fun put(data: UserAuth?) {
         userAuth = data
     }
 }
