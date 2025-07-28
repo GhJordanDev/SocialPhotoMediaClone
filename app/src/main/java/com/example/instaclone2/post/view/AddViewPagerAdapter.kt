@@ -1,4 +1,4 @@
-package com.example.instaclone2.add.view
+package com.example.instaclone2.post.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

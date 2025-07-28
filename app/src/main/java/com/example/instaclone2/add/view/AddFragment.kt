@@ -16,9 +16,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import com.example.instaclone2.R
-import com.example.instaclone2.add.Add
-import com.example.instaclone2.common.base.BaseFragment
 import com.example.instaclone2.databinding.FragmentAddBinding
+import com.example.instaclone2.post.view.AddActivity
+import com.example.instaclone2.post.view.AddViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -103,7 +103,7 @@ class AddFragment : Fragment(R.layout.fragment_add){
 
     }
 
-    private val getPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()){ granted ->
+    private val getPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ granted ->
         if(allPermissionsGranted()){
             startCamera()
         } else {
@@ -116,10 +116,11 @@ class AddFragment : Fragment(R.layout.fragment_add){
     }
 
     private fun allPermissionsGranted() =
-        ContextCompat.checkSelfPermission(requireContext(), REQUIRED_PERMISSION ) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(requireContext(), REQUIRED_PERMISSION [0] ) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(requireContext(), REQUIRED_PERMISSION [1] ) == PackageManager.PERMISSION_GRANTED
 
     companion object {
-        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+        private val REQUIRED_PERMISSION = arrayOf (Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
 
