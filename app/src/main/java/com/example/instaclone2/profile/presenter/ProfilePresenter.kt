@@ -33,7 +33,7 @@ class ProfilePresenter(
             }
 
             override fun onComplete() {
-                //TODO("Not yet implemented")
+
             }
         })
     }

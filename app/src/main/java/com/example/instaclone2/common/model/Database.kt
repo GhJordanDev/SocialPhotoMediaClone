@@ -1,11 +1,12 @@
 package com.example.instaclone2.common.model
 
+import android.net.Uri
+import java.io.File
 import java.util.UUID
 
 object Database {
 
-    val usersAuth = hashSetOf<UserAuth>()
-    val photos = hashSetOf<Photo>()
+    val usersAuth = mutableListOf<UserAuth>()
     val posts = hashMapOf<String, MutableSet<Post>>()
     val feeds = hashMapOf<String, MutableSet<Post>>()
     val followers = hashMapOf<String, Set<String>>()
@@ -29,7 +30,19 @@ object Database {
         posts[userB.uuid] = hashSetOf()
         feeds[userB.uuid] = hashSetOf()
 
-        sessionAuth = usersAuth.first()
+
+        feeds[userA.uuid]?.addAll(
+            arrayListOf(
+                Post(UUID.randomUUID().toString(), Uri.fromFile(File("")), "desc", System.currentTimeMillis(), userA),
+
+            )
+        )
+
+        feeds[userA.uuid]?.toList()?.let{
+            feeds[userB.uuid]?.addAll(it)
+        }
+
+       // sessionAuth = usersAuth.first()
     }
 
 }

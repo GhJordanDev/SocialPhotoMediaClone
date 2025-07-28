@@ -54,6 +54,7 @@ class ProfileFragment
         binding?.profileTxtFollowers?.text = userAuth.followersCount.toString()
         binding?.profileTxtUsername?.text = userAuth.name
         binding?.profileTxtBio?.text = "TODO"
+        binding?.profileImgIcon?.setImageURI(userAuth.photoUri)
 
         presenter.fetchUserPosts()
     }
