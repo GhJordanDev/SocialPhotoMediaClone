@@ -16,8 +16,11 @@ object Database {
 
     init {
 
-        val userA = UserAuth(UUID.randomUUID().toString(), "User A","userA@gmail.com", "12345678")
-        val userB = UserAuth(UUID.randomUUID().toString(), "User B","userB@gmail.com", "87654321")
+        val userA = UserAuth(UUID.randomUUID().toString(), "User A","userA@gmail.com", "12345678", Uri.fromFile(
+            File("")))
+
+        val userB = UserAuth(UUID.randomUUID().toString(), "User B","userB@gmail.com", "87654321", Uri.fromFile(
+            File("")))
 
         usersAuth.add (userA)
         usersAuth.add (userB)
@@ -42,7 +45,7 @@ object Database {
             feeds[userB.uuid]?.addAll(it)
         }
 
-       // sessionAuth = usersAuth.first()
+        sessionAuth = usersAuth.first()
     }
 
 }

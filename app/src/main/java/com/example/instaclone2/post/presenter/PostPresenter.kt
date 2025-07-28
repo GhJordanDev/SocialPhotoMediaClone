@@ -1,5 +1,6 @@
 package com.example.instaclone2.post.presenter
 
+import android.net.Uri
 import android.util.Patterns
 import com.example.instaclone2.R
 import com.example.instaclone2.common.base.RequestCallback
@@ -24,6 +25,8 @@ class PostPresenter(
     private val repository: PostRepository
 ) : Post.Presenter, CoroutineScope {
 
+    private var uri: Uri? = null
+
     private val job = Job()
     override val coroutineContext: CoroutineContext = job + Dispatchers.IO
 
@@ -47,6 +50,14 @@ class PostPresenter(
             }
         }
 
+    }
+
+    override fun selectedUri(uri: Uri) {
+        this.uri = uri
+    }
+
+    override fun getSelectedUri(): Uri? {
+        return uri
     }
 
     override fun onDestroy() {

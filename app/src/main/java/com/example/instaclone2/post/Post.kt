@@ -10,6 +10,8 @@ interface Post {
 
     interface Presenter : BasePresenter{
         fun fetchPictures()
+        fun getSelectedUri() : Uri?
+        fun selectedUri(uri: Uri)
     }
 
     interface View: BaseView<Presenter>{
