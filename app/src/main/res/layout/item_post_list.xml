@@ -19,7 +19,7 @@
         android:layout_marginStart="16dp"/>
 
     <TextView
-        android:id="@+id/home_txt_profile"
+        android:id="@+id/home_txt_username"
         style="@style/Theme.InstaClone2.TextViewBase"
         android:text="@string/username"
         android:layout_marginStart="8dp"
