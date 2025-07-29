@@ -17,6 +17,8 @@ import com.example.instaclone2.profile.data.ProfileMemoryCache
 import com.example.instaclone2.profile.data.ProfileRepository
 import com.example.instaclone2.register.data.FakeRegisterDataSource
 import com.example.instaclone2.register.data.RegisterRepository
+import com.example.instaclone2.search.data.SearchFakeRemoteDataSource
+import com.example.instaclone2.search.data.SearchRepository
 import com.example.instaclone2.spash.data.FakeLocalDataSource
 import com.example.instaclone2.spash.data.SplashRepository
 
@@ -32,6 +34,10 @@ object DependencyInjector {
 
     fun registerEmailRepository() : RegisterRepository{
         return RegisterRepository (FakeRegisterDataSource())
+    }
+
+    fun searchRepository() : SearchRepository{
+        return SearchRepository(SearchFakeRemoteDataSource())
     }
 
     fun profileRepository() : ProfileRepository{
