@@ -10,24 +10,27 @@ import java.util.UUID
 
 class ProfileFakeRemoteDataSource : ProfileDataSource {
 
-    override fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<UserAuth, Boolean?>>) {
+    override fun fetchUserProfile(
+        userUUID: String,
+        callback: RequestCallback<Pair<UserAuth, Boolean?>>
+    ) {
         Handler(Looper.getMainLooper()).postDelayed({
 
-            val userAuth = Database.usersAuth.firstOrNull{ userUUID == it.uuid}
+            val userAuth = Database.usersAuth.firstOrNull { userUUID == it.uuid }
 
-            if( userAuth != null){
-                if(userAuth == Database.sessionAuth ){
+            if (userAuth != null) {
+                if (userAuth == Database.sessionAuth) {
                     callback.onSucess(Pair(userAuth, null))
-                }else{
+                } else {
                     val followings = Database.followers[Database.sessionAuth!!.uuid]
 
-                    val destUser = followings?.firstOrNull{it == userUUID}
+                    val destUser = followings?.firstOrNull { it == userUUID }
                     // destUser != null -> Estou seguindo
 
                     callback.onSucess(Pair(userAuth, destUser != null))
 
                 }
-            } else{
+            } else {
                 callback.onFailure("Usuário não encontrado")
             }
             callback.onComplete()
@@ -37,12 +40,33 @@ class ProfileFakeRemoteDataSource : ProfileDataSource {
     override fun fetchUserPosts(userUUID: String, callback: RequestCallback<List<Post>>) {
         Handler(Looper.getMainLooper()).postDelayed({
 
-            val posts = Database.posts [userUUID]
+            val posts = Database.posts[userUUID]
 
             callback.onSucess(posts?.toList() ?: emptyList())
 
             callback.onComplete()
         }, 2000)
+    }
+
+    override fun followUser(userUUID: String, isFollow: Boolean, callback: RequestCallback<Boolean>) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            var followers = Database.followers[Database.sessionAuth!!.uuid]
+
+            if(followers == null){
+                followers = mutableSetOf()
+                Database.followers[Database.sessionAuth!!.uuid] = followers
+            }
+
+            if(isFollow){
+                Database.followers[Database.sessionAuth!!.uuid]!!.add(userUUID)
+            }else{
+                Database.followers[Database.sessionAuth!!.uuid]!!.remove(userUUID)
+            }
+
+            callback.onSucess(true)
+            callback.onComplete()
+
+        }, 500)
     }
 
 }
