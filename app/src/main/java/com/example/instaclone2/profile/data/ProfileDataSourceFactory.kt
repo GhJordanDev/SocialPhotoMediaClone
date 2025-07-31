@@ -5,7 +5,7 @@ import com.example.instaclone2.common.model.Post
 import com.example.instaclone2.common.model.UserAuth
 
 class ProfileDataSourceFactory(
-    private val profileCache : Cache<UserAuth>,
+    private val profileCache : Cache<Pair<UserAuth, Boolean?>>,
     private val postsCache : Cache<List<Post>>
 ) {
 

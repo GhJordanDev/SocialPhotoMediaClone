@@ -7,11 +7,11 @@ import com.example.instaclone2.common.model.Post
 import com.example.instaclone2.common.model.UserAuth
 
 class ProfileLocalDataSource(
-    private val profileCache : Cache<UserAuth>,
+    private val profileCache : Cache<Pair<UserAuth, Boolean?>>,
     private val postsCache : Cache<List<Post>>
 ) : ProfileDataSource {
 
-    override fun fetchUserProfile(userUUID: String, callback: RequestCallback<UserAuth>) {
+    override fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<UserAuth, Boolean?>>) {
        val userAuth = profileCache.get(userUUID)
         if(userAuth != null){
             callback.onSucess(userAuth)
@@ -34,7 +34,7 @@ class ProfileLocalDataSource(
     override fun fetchSession(): UserAuth {
         return Database.sessionAuth ?: throw RuntimeException ("usuário não logado")   }
 
-    override fun putUser(response: UserAuth) {
+    override fun putUser(response: Pair<UserAuth, Boolean?>) {
         profileCache.put(response)
     }
 

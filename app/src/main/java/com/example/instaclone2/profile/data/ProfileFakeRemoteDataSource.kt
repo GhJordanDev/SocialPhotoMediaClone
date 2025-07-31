@@ -10,13 +10,23 @@ import java.util.UUID
 
 class ProfileFakeRemoteDataSource : ProfileDataSource {
 
-    override fun fetchUserProfile(userUUID: String, callback: RequestCallback<UserAuth>) {
+    override fun fetchUserProfile(userUUID: String, callback: RequestCallback<Pair<UserAuth, Boolean?>>) {
         Handler(Looper.getMainLooper()).postDelayed({
 
             val userAuth = Database.usersAuth.firstOrNull{ userUUID == it.uuid}
 
             if( userAuth != null){
-                callback.onSucess(userAuth)
+                if(userAuth == Database.sessionAuth ){
+                    callback.onSucess(Pair(userAuth, null))
+                }else{
+                    val followings = Database.followers[Database.sessionAuth!!.uuid]
+
+                    val destUser = followings?.firstOrNull{it == userUUID}
+                    // destUser != null -> Estou seguindo
+
+                    callback.onSucess(Pair(userAuth, destUser != null))
+
+                }
             } else{
                 callback.onFailure("Usuário não encontrado")
             }
